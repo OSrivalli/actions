@@ -10,7 +10,7 @@ YEAR_RANGE_REGEX = r"[0-9]{4}(?: ?- ?[0-9]{4})?"
 
 
 # Helper functions
-def witespace_surround(
+def whitespace_surround(
 	text_lines: List[str], block_start: int, block_end: int
 ) -> None:
 	"""
