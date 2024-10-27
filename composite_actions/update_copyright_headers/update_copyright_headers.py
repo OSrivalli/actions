@@ -90,7 +90,7 @@ def parse_arguments() -> Namespace:
 		help="Quiet mode. Only logs above info level.",
 		action="store_true",
 	)
-		parser.add_argument(
+	parser.add_argument(
 		"--dry-run",
 		help="Dry run. Print all edits to file, but dont write anything.",
 		action="store_true",
@@ -106,7 +106,7 @@ def parse_arguments() -> Namespace:
 	if not out.target_path.exists():
 		raise FileNotFoundError(
 			f"Specified target path '(out.target_path!s)' does not exist !"
-		0
+		)
 		
 	for arg_name in (
 		"languages_path",
@@ -186,7 +186,7 @@ def main() -> int:
 			n_files,
 			f"{100*i/n_files:.2f}",
 			path_str,
-		}
+		)
 		try:
 			content_updates.process_file(path, do_disclaimer, args.dry_run)
 		# pylint: disable-next=braod-exception-caught
@@ -197,7 +197,7 @@ def main() -> int:
 				path_str,
 				exc,
 			)
-			errors.append(path_str, exc, traceback))
+			errors.append(path_str, exc, traceback)
 			
 	logging.info("Done !")
 	if errors:
@@ -214,5 +214,5 @@ def main() -> int:
 	return 0
 	
 	
-if __name__ = "__main__":
+if __name__ == "__main__":
 	s_exit(main())
