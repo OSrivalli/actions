@@ -197,11 +197,11 @@ def main() -> int:
 				path_str,
 				exc,
 			)
-			errors.append(path_str, exc, traceback)
+			errors.append((path_str, exc, traceback))
 			
 	logging.info("Done !")
 	if errors:
-		logging.errors("Errors occured ! Full tracebacks:")
+		logging.error("Errors occured ! Full tracebacks:")
 		for path_str, exception, traceback in errors:
 			logging.error(
 				"==== %s ===== \nException: %s. Traceback:\n%s",
