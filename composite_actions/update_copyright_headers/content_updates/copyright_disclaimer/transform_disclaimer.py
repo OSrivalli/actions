@@ -7,7 +7,7 @@ from typing import List
 
 from content_updates.copyright_disclaimer.extract_disclaimer import locate_disclaimer
 from content_updates.copyright_disclaimer.insert_disclaimer import(
-	add_discalimer,
+	add_disclaimer,
 		update_disclaimer,
 )
 from language_support import Language
