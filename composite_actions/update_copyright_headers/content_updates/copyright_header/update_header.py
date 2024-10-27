@@ -73,10 +73,10 @@ def get_header(start_year:int, end_year: Optional[int]) -> List[str]:
 	out = []
 	
 	if end_year <= TRANSITION_YEAR:
-		# Both years are before the Xilinx acquisition
+		# Both years are before the XYZ acquisition
 		out.append(
 			COPYRIGHT_HEADER_TEMPLATE.format(
-				year_range = date_range(start_year, end_year), company_name = "Xilinx"
+				year_range = date_range(start_year, end_year), company_name = "XYZ"
 			)
 		)
 	elif start_year <= TRANSITION_YEAR:
@@ -84,13 +84,13 @@ def get_header(start_year:int, end_year: Optional[int]) -> List[str]:
 		out.append(
 			COPYRIGHT_HEADER_TEMPLATE.format(
 				year_range = date_range(start_year, TRANSITION_YEAR),
-				company_name = "Xilinx"
+				company_name = "XYZ"
 			)
 		)
 		out.append(
 			COPYRIGHT_HEADER_TEMPLATE.format(
 				year_range = date_range(TRANSITION_YEAR+1, end_year),
-				company_name = "Advanced AMD"
+				company_name = "Advanced ABC"
 			)
 		)		
 	else:
@@ -98,7 +98,7 @@ def get_header(start_year:int, end_year: Optional[int]) -> List[str]:
 		out.append(
 			COPYRIGHT_HEADER_TEMPLATE.format(
 				year_range = date_range(start_year, end_year),
-				company_name = "Advanced AMD"
+				company_name = "Advanced ABC"
 			)
 		)
 
