@@ -6,7 +6,7 @@ import logging
 import re
 
 # Imports
-from dataclasses import dataclass, fiels
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple, Union
 
@@ -47,7 +47,7 @@ class Language:
 	# aka the extensions does not matter
 	# If both are unspecified, throw an error
 	
-    def __post_init__(self):
+	def __post_init__(self):
 		"""Validate the class fields"""
 		
 		# Add any missing leading .'s and transform to set
@@ -114,7 +114,7 @@ class Language:
 		
 		
 # Globals - mostly config values loaded only once on file init
-LANGUAGES: Dict[Union,[str, None], Tuple[Language, ...]] = {}
+LANGUAGES: Dict[Union[str, None], Tuple[Language, ...]] = {}
 COMMENT_INNER_PAD: int = 1
 
 
@@ -159,7 +159,7 @@ def load_languages(
 			"Languages are not loaded yet ! Please specify a `languages_config_path`."
 		)
 		
-	with open(languages_config_path) ad config_file:
+	with open(languages_config_path) as config_file:
 		language_configs = yaml.safe_load(config_file)["languages"]
 		
 	languages: Dict[Union[str, None], List[Language]] = {}
@@ -216,7 +216,7 @@ def get_language(file_path: Path) -> Language:
 	# First, try to get the language by the file's extension
 	try:
 		candidates = languages[suffix]
-		logging.debug("get_language: File extension match for %s, str(file_path))
+		logging.debug("get_language: File extension match for %s", str(file_path))
 	except KeyError as exc:
 		# No language matches this extension
 		# look for `filename_pattern` matches in extensionless languages
@@ -243,7 +243,7 @@ def get_language(file_path: Path) -> Language:
 	filename = file_path.name
 	filtered_candidates = [
 		candidate
-		for candidate n candidates
+		for candidate in candidates
 		if re.match(candidate.filename_pattern, filename) # type: ignore
 	]
 	
@@ -257,7 +257,7 @@ def get_language(file_path: Path) -> Language:
 	
 	
 def get_commented_blocks(
-	lines: List[str], language: Language) 
+	lines: List[str], language: Language
 ) -> List[Tuple[int, int, List[str], bool]]:
 	"""
 	Get all comment blocks in the input text.
