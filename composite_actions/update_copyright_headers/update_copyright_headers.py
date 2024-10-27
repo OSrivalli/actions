@@ -24,7 +24,7 @@ import language_support
 # Main functions
 def parse_arguments() -> Namespace:
 	"""Parse and Validate command-line arguments"""
-	parse = ArgumentParser(description=__doc__)
+	parser = ArgumentParser(description=__doc__)
 	parser.add_argument(
 		"-t",
 		"--target",
@@ -35,7 +35,7 @@ def parse_arguments() -> Namespace:
 	)
 	parser.add_argument(
 		"-l",
-		"--language_path",
+		"--languages_path",
 		help="Path to a language definition config file",
 		type=Path,
 		default=Path(language_support.__file__).parent.joinpath(
@@ -132,12 +132,12 @@ def config_setup(args: Namespace) -> None:
 		if args.verbose
 		else (logging.WARNING if args.quiet else logging.INFO)
 	)
-	loging.basicConfig(format="[%(relativeCreated)d ms] %(message)s", level=level)
+	logging.basicConfig(format="[%(relativeCreated)d ms] %(message)s", level=level)
 	
 	# Load config and content files
 	logging.info("Loading languages from %s", str(args.languages_path))
 	language_support.load_languages(languages_config_path=args.languages_path)
-	logging.debug("Loaded langugaes: %s", language_support.load_langugaes())
+	logging.debug("Loaded langugaes: %s", language_support.load_languages())
 	
 	logging.info("loading exclude patterns from %s", str(args.excludes_path))
 	file_walk.get_exclude_patterns(excludes_file_path=args.excludes_path)
