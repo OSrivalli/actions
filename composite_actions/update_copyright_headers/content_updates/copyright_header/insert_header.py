@@ -77,7 +77,7 @@ def add_header(text_lines: List[str], file_path: Path) -> List[str]:
 	return out
 	
 	
-def udate_header(
+def update_header(
 	text_lines: List[str],
 	file_language: Language,
 	start_line: int,
