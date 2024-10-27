@@ -7,7 +7,7 @@ import logging
 # Imports
 from os import walk
 from pathlib import Path
-from typing import Genrator, Optional, Tuple, Union
+from typing import Generator, Optional, Tuple, Union
 
 # Change the name as we are not using this as "real" codeowners
 # pylint disagress with isort on the order of this import...
@@ -86,7 +86,7 @@ def get_relevant_files(
 			curr_file = curr_dir.joinpath(filename).absolute()
 			try:
 				_ = get_language(curr_file)
-			except_ValueError:
+			except ValueError:
 				# If we get a ValueError, that means this file's language is not supported
 				logging.debug("Ignoring %s... (unsupported language)", str(curr_file))
 				continue
@@ -99,7 +99,7 @@ def get_relevant_files(
 			if disclaimer_mode == "config":
 				if ("USERNAME", "@disclaimer") in matching_patterns:
 					do_disclaimer = True
-					matching_patterns.remove("USERNAME", "@disclaimer"))
+					matching_patterns.remove("USERNAME", "@disclaimer")
 			elif disclaimer_mode == "always":
 				do_disclaimer = True
 				
