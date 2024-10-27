@@ -3,7 +3,7 @@ Update or insert new header into the file
 """
 # Imports
 import logging
-import pathlib import Path
+from pathlib import Path
 from typing import List
 
 from content_updates.config import do_whitespace_surround
@@ -126,7 +126,7 @@ def udate_header(
 	out[start_line : end_line +1] = commented_header_lines
 	
 	# The value of end_line is not correct anumore as the header might be a different size
-	end_line = start_line + len(commented_header_lines -1
+	end_line = start_line + len(commented_header_lines) -1
 	
 	if do_whitespace_surround():
 		logging.debug("Surrounding header with whitespace")
