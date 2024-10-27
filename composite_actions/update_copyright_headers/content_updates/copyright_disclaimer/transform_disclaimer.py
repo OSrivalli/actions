@@ -42,7 +42,7 @@ def process_disclaimer(text_lines: List[str], file_language: Language):
 	new_lines = update_disclaimer(text_lines, file_language, d_start, d_end)
 	
 	if new_lines == text_lines:
-		logging_info("Existing disclaimer alreday up-to-date")
+		logging_info("Existing disclaimer already up-to-date")
 	else:
 		logging_info("Disclaimer updated ! ")
 		
