@@ -13,7 +13,7 @@ from content_updates.utils import YEAR_RANGE_REGEX, date_range, parse_year_range
 
 #Globals
 COPYRIGHT_HEADER_TEMPLATE = (
-   "(c) Copyright {year_range} {company_name}, Inc. All Rights reserved.\n"
+   "Copyright (C) {year_range} {company_name}, Inc. All Rights reserved.\n"
   )
   
 # XYZ acquisition year_range
