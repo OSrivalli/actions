@@ -1,74 +1,73 @@
 ---
 languages:
-	- name: Python
-	  extensions: [.py]
-	  comment_marker: '#'
-	  # NOTE : Disable multiline support for python
-	  # Adding at the top can interfere with module docstrings
-	  # multiline_start: '"""'
-	  # multiline_end: '"""'
-	 
-	- name: Java/JavaScript/Groovy
-	  extensons: [.java, .js, .ts, .groovy]
-	  comment_marker: //
-	  multiline_start: /*
-	  multiline_end: '*/'
+  - name: Python
+    extensions: [.py]
+    comment_marker: '#'
+    # NOTE : Disable multiline support for python
+    # Adding at the top can interfere with module docstrings
+    # multiline_start: '"""'
+    # multiline_end: '"""'
+
+  - name: Java/JavaScript/Groovy
+    extensons: [.java, .js, .ts, .groovy]
+    comment_marker: //
+    multiline_start: /*
+    multiline_end: '*/'
+
+  - name: Jenkinsfiles
+    extensons: ['']
+    filename_pattern: Jenkinsfile(_.*)?
+    comment_marker: //
+    multiline_start: /*
+    multiline_end: '*/'
+
+  - name: C / C++
+    extensons: [.h, .c, .v, .hh, .hpp, .cc, .cxx, .cpp]
+    comment_marker: //
+    multiline_start: /*
+    multiline_end: '*/'
+ 
+  - name: Shell
+    extensons: [.sh, .bash, .psl, .tsl, .awk, .gawk]
+    comment_marker: '#'
+
+  - name: Windows Shell
+    extensons: [.bat, .cmd]
+    comment_marker: '@REM'
+
+  - name: XML / XMLPP
+    extensons: [.xml, .xsd, .core, .platform, .gpu, .logic, .devicetotals, .pp, .ppi]
+    comment_marker: <!--
+    single_line: -->
+    multiline_start: <!--
+    multiline_end: -->
+
+  - name: Markdown
+    extensons: [.md]
+    comment_marker: <!--
+    single_line: -->
+    multiline_start: <!--
+    multiline_end: -->
+
+  - name: YAML
+    extensons: [.yaml, .yml]
+    comment_marker: '#'
+
+  - name: TOML
+    # Different from YAML because does not require document start marker ('---')
+    extensons: [.toml]
+    comment_marker: '#'
 	
-	- name: Jenkinsfiles
-	  extensons: ['']
-	  filename_pattern: Jenkinsfile(_.*)?
-      comment_marker: //
-	  multiline_start: /*
-	  multiline_end: '*/'
-	
-	- name: C / C++
-	  extensons: [.h, .c, .v, .hh, .hpp, .cc, .cxx, .cpp]
-	  comment_marker: //
-	  multiline_start: /*
-	  multiline_end: '*/'
-	
-	- name: Shell
-	  extensons: [.sh, .bash, .psl, .tsl, .awk, .gawk]
-	  comment_marker: '#'
-	
-	- name: Windows Shell
-	  extensons: [.bat, .cmd]
-	  comment_marker: '@REM'
-	
-	- name: XML / XMLPP
-	  extensons: [.xml, .xsd, .core, .platform, .gpu, .logic, .devicetotals, .pp, .ppi]
-	  comment_marker: <!--
-	  single_line: -->
-	  multiline_start: <!--
-	  multiline_end: -->
-	
-	- name: Markdown
-	  extensons: [.md]
-	  comment_marker: <!--
-	  single_line: -->
-	  multiline_start: <!--
-	  multiline_end: -->
-	
-	- name: YAML
-	  extensons: [.yaml, .yml]
-	  comment_marker: '#'
-	
-	- name: TOML
-	  # Different from YAML because does not require document start marker ('---')
-	extensons: [.toml]
-	comment_marker: '#'
-	
-	- name: CMake
-	extensons: [.cmake]
-	comment_marker: '#'
-	
-	- name: CMakeLists
-	extensons: [.txt]
-	filename_pattern: CMakeLists
-	comment_marker: '#'
-	
-	- name: Pip requirements
-	extensons: [.txt]
-	filename_pattern: .*requirements
-	comment_marker: '#'
-	
+  - name: CMake
+    extensons: [.cmake]
+    comment_marker: '#'
+
+  - name: CMakeLists
+    extensons: [.txt]
+    filename_pattern: CMakeLists
+    comment_marker: '#'
+ 
+  - name: Pip requirements
+    extensons: [.txt]
+    filename_pattern: .*requirements
+    comment_marker: '#'
