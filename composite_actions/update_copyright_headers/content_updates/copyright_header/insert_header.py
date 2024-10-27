@@ -1,5 +1,3 @@
-insert_header.py
-
 """
 Update or insert new header into the file
 """
