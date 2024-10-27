@@ -1,5 +1,3 @@
-transform_header.py
-
 """
 Defines the main function for this module, process_header()
 """
