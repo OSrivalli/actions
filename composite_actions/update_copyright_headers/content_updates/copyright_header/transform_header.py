@@ -28,7 +28,7 @@ def process_header(text_lines: List[str], file_path: Path) -> List[str]:
 		LINES_WITH_HEADER (List[str]): New text, with the updated/new header.
 	"""
 	
-	file_language = get-language(file_path)
+	file_language = get_language(file_path)
 	
 	header_data = locate_header(text_lines, file_language)
 	logging.debug("header_data: %s", header_data)
