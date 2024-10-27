@@ -1,0 +1,29 @@
+# DEFAULT DUMMY FILE
+# This file allows you to specify files to exclude.
+# It uses a CODEOWNERS-like syntax:
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#example-of-a-codeowners-file
+
+# Assigning any owner will cause the file to be excluded from copyright updates. Inversely, a file with no owner will be included.
+# You can use the special fake '@include' user to override a previous rule and include a file.
+
+# When using disclaimer-mode=config, only files with the '@disclaime' owner will get a disclaimer added
+# When disclaime-mode=always or never, the '@disclaimer' owner is ignored: it is as if the file had no owner.
+# Note that adding the '@disclaimer' does not exclude the file from copyright updates.
+
+# EXAMPLE SYNTAX
+# exclude_me/ @exclude
+# exclude_me/include_me @include
+# also_exclude_me/ @dummy
+# *.js @exclude
+# **/node_modules @exclude
+# add_disclaimer/ @disclaimer
+# add_disclaimer/exclude_me @exclude
+# add_disclaimer/no_disclaimer @include
+
+# --> All js files, all node_odules, all files in 'also_exclude_me/', and files in 'exclude_me' but not 'exclude_me/include_me' will be excluded.
+# --> All files in add_disclaimer will get disclaimers added.
+# Files in add_disclaimer/exclude_me will not get any updates
+# FIles in add_disclaimer/no_disclaimer will get header updates, but no disclaimer.
+
+# This default config excludes everything, so define your own !
+* @exclude
