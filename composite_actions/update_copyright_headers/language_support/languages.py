@@ -210,7 +210,7 @@ def get_language(file_path: Path) -> Language:
 		file_language (Language): Language object for this file.
 	"""
 	
-	languages = load_language()
+	languages = load_languages()
 	suffix = file_path.suffix
 	
 	# First, try to get the language by the file's extension
