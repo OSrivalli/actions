@@ -7,7 +7,7 @@ from pathlib import Path
 # Imports
 from typing import List, Optional, Union
 from content_updates.config import do_whitespace_surround
-from content_updates.copyright _header.extract_header import locate_header
+from content_updates.copyright_header.extract_header import locate_header
 from content_updates.utils import whitespace_surround
 from language_support import Language
 
