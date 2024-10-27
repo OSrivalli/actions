@@ -91,7 +91,7 @@ def get_relevant_files(
 				logging.debug("Ignoring %s... (unsupported language)", str(curr_file))
 				continue
 				
-			matching_patterns = get_exclude_paterns().of(
+			matching_patterns = get_exclude_patterns().of(
 				str(curr_file.relative_to(root))
 			)
 			
