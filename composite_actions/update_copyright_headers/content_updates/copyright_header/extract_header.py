@@ -1,5 +1,3 @@
-Extract_header.py
-
 """
 Check file to see if it contaons a copyright header, and extract its position
 """
