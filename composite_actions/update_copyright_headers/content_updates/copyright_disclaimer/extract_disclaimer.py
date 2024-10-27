@@ -54,7 +54,7 @@ def block_score(block: List[str]) -> float:
 			res += keyword_coeff
 		
 	# Check for key phrases
-	for key-phrase in key_phrases:
+	for key_phrase in key_phrases:
 		if key_phrase.lower() in full_text:
 			res += key_phrase_coeff
 			
