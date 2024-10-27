@@ -38,7 +38,7 @@ def process_header(text_lines: List[str], file_path: Path) -> List[str]:
 		logging.info("Header not found, adding new one.")
 		return add_header(text_lines, file_path)
 		
-	h_start, h_end in_multiple = header_data
+	h_start, h_end, in_multiple = header_data
 	new_lines = update_header(text_lines, file_language, h_start, h_end, in_multiline)
 	
 	if new_lines == text_lines:
