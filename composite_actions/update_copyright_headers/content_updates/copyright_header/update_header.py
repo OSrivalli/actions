@@ -1,3 +1,7 @@
+"""
+Generate a filled-in header according to the template and specified years.
+"""
+
 # Imports
 import re
 import subprocess
@@ -12,7 +16,7 @@ COPYRIGHT_HEADER_TEMPLATE = (
    "(c) Copyright {year_range} {company_name}, Inc. All Rights reserved.\n"
   )
   
-# Xilinx acquisition year_range
+# XYZ acquisition year_range
 TRANSITION_YEAR = 2021
 
 # Global variables = evaluated once on file init
@@ -21,15 +25,15 @@ CURRENT_YEAR = date.today().year
 
 
 def get_creation_year_from_header(header_lines: List[str]) -> int:
-     """Get the oldest year specified in the header"""
-	 res = 9999
-	 for line in header_lines:
+	"""Get the oldest year specified in the header"""
+	res = 9999
+	for line in header_lines:
 		match = re.search(YEAR_RANGE_MATCHER, line)
-		if.match:
+		if match:
 			y1, _ = parse_year_range(match["year_range"])
 			res = min(res,y1)
 			
-	if res = 9999:
+	if res == 9999:
 		raise ValueError("Year not found in the input text !")
 		
 	return res
@@ -37,7 +41,7 @@ def get_creation_year_from_header(header_lines: List[str]) -> int:
 
 def get_creation_year_from_git(file_path: Path) -> int:
 	"""Parse the file's git history, getting the oldest mentioned year."""
-	"Can't use subprocess.run as git log outputs to an interactive text view
+	"Can't use subprocess.run as git log outputs to an interactive text view"
 	result = subprocess.check_output(
 		["git", "log", "--follow", "--format=%aD", str(file_path.absolute())]
 	).decode("utf-8")
@@ -64,7 +68,7 @@ def get_header(start_year:int, end_year: Optional[int]) -> List[str]:
 		end_year = start_year
 		
 	if start_year > end_year:
-		raise ValueError('end' must be greater than 'start' !)
+		raise ValueError("'end' must be greater than 'start' !")
 		
 	out = []
 	
