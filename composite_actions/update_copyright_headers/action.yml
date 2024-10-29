@@ -1,7 +1,6 @@
 ---
 name: Update Copyright Headers & Disclaimers
-description: Automatically adds XYZ/ABC copyright headers as comments to all files in the 
-    repo. The repo needs to be checked out with a token having write access to the repo.
+description: Automatically adds XYZ/ABC copyright headers as comments to all files in the repo. The repo needs to be checked out with a token having write access to the repo.
 	
 inputs:
 	pr_target_branch:
@@ -23,7 +22,7 @@ inputs:
 	disclaimer_mode:
 	  description: |
 	    Control when to add the disclaimer text to processed files.
-		Must be one of 'always', 'never', or 'config', for more details, see README.md
+		Must be one of `always`, `never`, or `config`, for more details, see README.md
 		Defaults to 'never'
 	  required: false
 	  default: never
