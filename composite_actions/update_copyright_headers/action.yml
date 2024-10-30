@@ -1,156 +1,149 @@
 ---
 name: Update Copyright Headers & Disclaimers
 description: Automatically adds XYZ/ABC copyright headers as comments to all files in the repo. The repo needs to be checked out with a token having write access to the repo.
-	
+
 inputs:
-	pr_target_branch:
-	  description: Target branch for the PR updating copyright headers.
-   	  required: True
-	token:
-	  description: Token for octokit authuntification. Defaults to GITHUB_TOKEN.
-	  default: ${{ github.token }}
-	target_repo:
-	  description: Owner/name of the target_repo. Default to the current repo.
-	  required: false
-	  default: ${{ github.repository }}
-	pr_reviewers:
-	  description: |
-   	    Reviewers to add to the PR, can be a single reviewer or a list.
-	    Defaults to no reviewers.
-	  required: false
-      default: '[]'
-	disclaimer_mode:
-	  description: |
-	    Control when to add the disclaimer text to processed files.
-		Must be one of `always`, `never`, or `config`, for more details, see README.md
-		Defaults to 'never'
-	  required: false
-	  default: never
-	target_path:
-	  description: |
-	    Root path containing the files to update, usually the target repo's root.
-		Defaults to GITHUB_WORKSPACE.
-	  required: false
-	  default: ${{ github.workspace }}
-	copyright_excludes_path:
-	  description: |
-	    Path (relative to target_path) to a `COPYRIGHT_EXCLUDES` file.
-		If unspecified, the action will process all valid files in the repo.
-		See `file_walk/DEFAULT_COPYRIGHT_EXCLUDES` for help with the syntax.
-	  required: false
-	  default: ''
-	languages_path:
-	  description: |
-	    Path (relative to target_path) to a `language_definitions.yml` file.
-		If unspecified, the default at `language_support/default_languages.yml` will be used.
-		Specifying this file will "overwrite" the default config, not merge
-      required: false
-	  default: ''
-	disclaimer_path:
-	  description: |
-	    Path (relative to target_path) to a file containing a disclaimer text.
-		If unspecified, the default at `content_updates/default_disclaimer.txt` will be used.
-	  required: false
-	  default: ''
-	do_whitespace_surround:
-	  description: |
-	    Whether to add blank lines around copyright text (headers & disclaimers).
-	  required: false
-	  default: 'False'
-	commit_padding:
-	  description: |
-	    Amount of padding, in spaces, to add between the comment marker and text.
-	  required: false
-	  default: '1'
-	  
+  pr_target_branch:
+    description: Target branch for the PR updating copyright headers.
+    required: true
+  token:
+    description: Token for octokit authentication. Defaults to GITHUB_TOKEN.
+    default: ${{ github.token }}
+  target_repo:
+    description: Owner/name of the target_repo. Defaults to the current repo.
+    required: false
+    default: ${{ github.repository }}
+  pr_reviewers:
+    description: |
+      Reviewers to add to the PR, can be a single reviewer or a list.
+      Defaults to no reviewers.
+    required: false
+    default: '[]'
+  disclaimer_mode:
+    description: |
+      Control when to add the disclaimer text to processed files.
+      Must be one of `always`, `never`, or `config`, for more details, see README.md.
+      Defaults to 'never'.
+    required: false
+    default: never
+  target_path:
+    description: |
+      Root path containing the files to update, usually the target repo's root.
+      Defaults to GITHUB_WORKSPACE.
+    required: false
+    default: ${{ github.workspace }}
+  copyright_excludes_path:
+    description: |
+      Path (relative to target_path) to a `COPYRIGHT_EXCLUDES` file.
+      If unspecified, the action will process all valid files in the repo.
+      See `file_walk/DEFAULT_COPYRIGHT_EXCLUDES` for help with the syntax.
+    required: false
+    default: ''
+  languages_path:
+    description: |
+      Path (relative to target_path) to a `language_definitions.yml` file.
+      If unspecified, the default at `language_support/default_languages.yml` will be used.
+      Specifying this file will "overwrite" the default config, not merge.
+    required: false
+    default: ''
+  disclaimer_path:
+    description: |
+      Path (relative to target_path) to a file containing a disclaimer text.
+      If unspecified, the default at `content_updates/default_disclaimer.txt` will be used.
+    required: false
+    default: ''
+  do_whitespace_surround:
+    description: |
+      Whether to add blank lines around copyright text (headers & disclaimers).
+    required: false
+    default: 'False'
+  commit_padding:
+    description: |
+      Amount of padding, in spaces, to add between the comment marker and text.
+    required: false
+    default: '1'
+
 runs:
-  using: composite                                        
+  using: composite
   steps:
     - uses: actions/setup-python@v4
-	  with:
-	    python-version: '3.8'
-		
-	- name: Install python dependencies
-	  shell: bash
-	  run: |
-	    python3 -m venv ${{ github.action_path }}/.venv
-		source ${{ github.action_path }}/.venv/bin/activate
-		pip3 install -r ${{ github.action_path }}/requirements.txt
-		
-		
-	- name: Run updater script
-	  shell: bash
-	  id: run_script
-	  continue-on-error: true
-	  run: |
-	    source '${{ github.action_path }}/.venv/bin/activate'
-		
-		args='-t ${{ inputs.target_path }}'
-		args+= ' --disclaimer_mode ${{inputs.disclaimer_mode }}'
-		
-		if [[ -n '${{ inputs.copyright_excludes_path }}' ]];
-		then
-		    args+=' --excludes_path ${{ inputs.copyright_excludes_path }}'
-		fi
-		
-		if [[ -n '${{ inputs.languages_path }}' ]];
-		then
-		    args+=' --languages_path ${{ inputs.languages_path }}'
-		fi
-		
-		if [[ -n '${{ inputs.disclaimer_path }}' ]];
-		then
-		    args+=' --disclaimer_path ${{ inputs.disclaimer_path }}'
-		fi
-		
-		if [[ '${{ inputs.do_whitespace_surround }}' =~ [Tt]rue[Yy]es[Oo]n ]];
-		then
-		    args+=' --whitespace-surround'
-		elif [[ ! '${{ inputs.do_whitespace_surround }}' =~ [Ff]alse[Nn]o[Oo]ff ]];
-        then
-		  echo "Invalid value '${{ inputs.do_whitespace_surround }}' for do_whitespace_surround !"
-		  exit 1
-		fi
-		
-		args+=' --padding ${{ inputs.commit_padding }}'
-		
-		python ${{ github.action_path }}/update_copyright_headers.py ${args}
-		
-	- name: Check for changes
-	  shell: bash
-	  id: check_changes
-	  # Needs to be its own step to make sure it executes even if the script exited 1
-	  run: |
-	    n_changes=${{ git status --porcelain=v1 2>/dev/null | wc -1)
-		echo "n_changes=${n_changes}" >> $GITHUB_OUTPUT
-		if [[ "${n_changes}" == 0 ]]; then  
-		  echo "No chnages ! Nothing else to do."
-		fi
-		
-	- name: Commit and push to remote
-	  shell: bash
-	  id: commit_changes
-	  if: ${{ steps.check_changes.outputs.n_changes > 0 }}
-	  run: | # use ISO 8601 basic (extended has a colon which is not valid in a branch name)
-	    DATETIME="$(date + %Y%m%d%T%H%M)"
-		BRANCH="jenkins_copyright_update_${{ inputs.pr_target_branch }}_${DATETIME}"
-		cd ${{ inputs.target_path }}
-		git config --local user.email "act-devops@xyz.com"
-		git config --local user.name "svc-act-jenkins"
-		git checkout -b "${BRANCH}"
-		git add .
-		gt commit -m "Copyright headers update (${DATETIME})"
-		git push --set-upstream origin "${BRANCH}"
-		
-		echo "BRANCH=${BRANCH}" >> "$GITHUB_OUTPUT"
-		
-	- name: Open PR for copyright update
+      with:
+        python-version: '3.8'
+
+    - name: Install python dependencies
+      shell: bash
+      run: |
+        python3 -m venv ${{ github.action_path }}/.venv
+        source ${{ github.action_path }}/.venv/bin/activate
+        pip3 install -r ${{ github.action_path }}/requirements.txt
+
+    - name: Run updater script
+      shell: bash
+      id: run_script
+      continue-on-error: true
+      run: |
+        source '${{ github.action_path }}/.venv/bin/activate'
+
+        args='-t ${{ inputs.target_path }}'
+        args+= ' --disclaimer_mode ${{ inputs.disclaimer_mode }}'
+
+        if [[ -n '${{ inputs.copyright_excludes_path }}' ]]; then
+            args+=' --excludes_path ${{ inputs.copyright_excludes_path }}'
+        fi
+
+        if [[ -n '${{ inputs.languages_path }}' ]]; then
+            args+=' --languages_path ${{ inputs.languages_path }}'
+        fi
+
+        if [[ -n '${{ inputs.disclaimer_path }}' ]]; then
+            args+=' --disclaimer_path ${{ inputs.disclaimer_path }}'
+        fi
+
+        if [[ '${{ inputs.do_whitespace_surround }}' =~ [Tt]rue[Yy]es[Oo]n ]]; then
+            args+=' --whitespace-surround'
+        elif [[ ! '${{ inputs.do_whitespace_surround }}' =~ [Ff]alse[Nn]o[Oo]ff ]]; then
+            echo "Invalid value '${{ inputs.do_whitespace_surround }}' for do_whitespace_surround!"
+            exit 1
+        fi
+
+        args+=' --padding ${{ inputs.commit_padding }}'
+
+        python ${{ github.action_path }}/update_copyright_headers.py ${args}
+
+    - name: Check for changes
+      shell: bash
+      id: check_changes
+      run: |
+        n_changes=$(git status --porcelain=v1 2>/dev/null | wc -l)
+        echo "n_changes=${n_changes}" >> $GITHUB_OUTPUT
+        if [[ "${n_changes}" == 0 ]]; then  
+            echo "No changes! Nothing else to do."
+        fi
+
+    - name: Commit and push to remote
+      shell: bash
+      id: commit_changes
+      if: ${{ steps.check_changes.outputs.n_changes > 0 }}
+      run: |
+        DATETIME="$(date +%Y%m%d%T%H%M)"
+        BRANCH="jenkins_copyright_update_${{ inputs.pr_target_branch }}_${DATETIME}"
+        cd ${{ inputs.target_path }}
+        git config --local user.email "act-devops@xyz.com"
+        git config --local user.name "svc-act-jenkins"
+        git checkout -b "${BRANCH}"
+        git add .
+        git commit -m "Copyright headers update (${DATETIME})"
+        git push --set-upstream origin "${BRANCH}"
+
+        echo "BRANCH=${BRANCH}" >> "$GITHUB_OUTPUT"
+
+    - name: Open PR for copyright update
       uses: ACA_Devops/actions/composite_actions/open_pr@main
-	  if: ${{ steps.commit_changes.conclusion != 'skipped' }}
-	  with:
-	    REPOSITORY_NAME: ${{ inputs.target_repo }}
-		SOURCE_BRANCH: ${{ steps.commit_changes.outputs.BRANCH }}
-		TARGET_BRANCH: ${{ inputs.pr_target_branch }}
-		PULL_REQUEST_TITLE: Update/Add missing copyright headers
-		REVIEWER: ${{ inputs.pr_reviewers }}
-		GITHUB_TOKEN: ${{ inputs.token }}
+      if: ${{ steps.commit_changes.conclusion != 'skipped' }}
+      with:
+        REPOSITORY_NAME: ${{ inputs.target_repo }}
+        SOURCE_BRANCH: ${{ steps.commit_changes.outputs.BRANCH }}
+        TARGET_BRANCH: ${{ inputs.pr_target_branch }}
+        PULL_REQUEST_TITLE: Update/Add missing copyright headers
+        REVIEWER: ${{ inputs.pr_reviewers }}
+        GITHUB_TOKEN: ${{ inputs.token }}
