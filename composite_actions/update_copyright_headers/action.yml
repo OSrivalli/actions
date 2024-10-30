@@ -136,14 +136,3 @@ runs:
         git push --set-upstream origin "${BRANCH}"
 
         echo "BRANCH=${BRANCH}" >> "$GITHUB_OUTPUT"
-
-    - name: Open PR for copyright update
-      uses: ACA_Devops/actions/composite_actions/open_pr@main
-      if: ${{ steps.commit_changes.conclusion != 'skipped' }}
-      with:
-        REPOSITORY_NAME: ${{ inputs.target_repo }}
-        SOURCE_BRANCH: ${{ steps.commit_changes.outputs.BRANCH }}
-        TARGET_BRANCH: ${{ inputs.pr_target_branch }}
-        PULL_REQUEST_TITLE: Update/Add missing copyright headers
-        REVIEWER: ${{ inputs.pr_reviewers }}
-        GITHUB_TOKEN: ${{ inputs.token }}
