@@ -57,7 +57,7 @@ languages:
     # Different from YAML because does not require document start marker ('---')
     extensons: [.toml]
     comment_marker: '#'
-	
+
   - name: CMake
     extensons: [.cmake]
     comment_marker: '#'
