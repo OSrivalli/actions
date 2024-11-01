@@ -26,4 +26,4 @@
 # FIles in add_disclaimer/no_disclaimer will get header updates, but no disclaimer.
 
 # This default config excludes everything, so define your own !
-* @exclude
+.git/ @exclude
