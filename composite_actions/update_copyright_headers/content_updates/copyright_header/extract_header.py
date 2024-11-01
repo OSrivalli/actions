@@ -28,7 +28,7 @@ EXISTING_HEADER_REGEX = re.compile(
 	#pylint: disable-next=line-too-long
 	#rf"^\s*\S{{0,5}}\s*(?:\(C\))? Copyright (?P<year_range>{YEAR_RANGE_REGEX}) (?:XYZ|ABC|Advanced ABC).*$",
 	#flags=re.IGNORECASE,
-	rf"^\s*\S{{0,5}}\s* Copyright (?:\(c\))? (?P<year_range>{YEAR_RANGE_REGEX}) (?:XYZ|ABC|Advanced ABC).*$"
+	rf"^\s*\S{{0,5}}\s* Copyright (?:\(c\))? (?P<year_range>{YEAR_RANGE_REGEX}) (?:XYZ|ABC|Advanced ABC).*$",
 	flags=re.IGNORECASE,
 )
 
